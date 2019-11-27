@@ -6,7 +6,7 @@
 /*   By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 13:26:37 by pmaldagu          #+#    #+#             */
-/*   Updated: 2019/11/27 17:13:12 by pmaldagu         ###   ########.fr       */
+/*   Updated: 2019/11/27 18:48:55 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int main()
 	//int j = 30;
 
 	printf("\n=============== MON PRINTF ===============\n\n");
-	ft_printf("le resultat du %p de %*.5d + %05d", str, a, b, i);
+	ft_printf("le resultat du %p de %5.*d + %05d", str, a, b, i);
 	printf("\n\n================= PRINTF =================\n\n");
-	printf("le resultat du %p de %*.5d + %05d ", str, a, b, i);
+	printf("le resultat du %p de %5.*d + %05d ", str, a, b, i);
 	//printf("\n=============== HEX ADRSS ================\n\n");
 	//printf("%s\n", ft_hexadress );
 	return (0);

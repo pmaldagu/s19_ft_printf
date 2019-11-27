@@ -6,7 +6,7 @@
 /*   By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 12:52:22 by pmaldagu          #+#    #+#             */
-/*   Updated: 2019/11/27 16:44:16 by pmaldagu         ###   ########.fr       */
+/*   Updated: 2019/11/27 18:51:57 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static char	*ft_conversion(char type, va_list ap)
 		return (ft_itoa_ubase(va_arg(ap, unsigned int), 16, 'M'));
 	else if (type == 'p')
 		return (ft_hexadress(va_arg(ap, unsigned long)));
+	else if (type == '%')
+		return (ft_strdup("%"));
 	else
 		return (NULL);
 }
@@ -164,9 +166,10 @@ static char  *ft_modifier(char *format, char flags, va_list ap)
 				i++;
 			}
 			pre = ft_atoi(mod);
+			k = 1;
 		}
 		free(mod);
-		if (pre > ft_strlen(arg))
+		if (pre > ft_strlen(arg) && k > 0)
 		{
 			pre = pre - ft_strlen(arg);
 			mod = ft_calloc(1, pre + 1);
@@ -181,6 +184,8 @@ static char  *ft_modifier(char *format, char flags, va_list ap)
 				arg = ft_strjoin(mod, arg);
 			free(mod);
 		}
+		else
+			flags = 0;
 		if (nb > ft_strlen(arg))
 		{
 			nb = nb - ft_strlen(arg);
