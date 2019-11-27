@@ -6,7 +6,7 @@
 /*   By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 12:52:22 by pmaldagu          #+#    #+#             */
-/*   Updated: 2019/11/19 18:13:06 by pmaldagu         ###   ########.fr       */
+/*   Updated: 2019/11/27 16:44:16 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,36 @@ static char  *ft_modifier(char *format, char flags, va_list ap)
 	char *mod;
 	size_t nb;
 	size_t pre;
+	long int k;
 	char *arg;
 
 	i = 0;
 	j = 0;
 	pre = 0;
+	arg = NULL;
 	mod = ft_calloc(1, 1);
-	while ((arg = ft_conversion(format[i], ap)) == NULL && ft_isdigit(format[i]) != 0)
+	if (format[i] == '*')
 	{
-		mod = ft_strjoin(mod, ft_chrdup(format[i]));
 		i++;
+		k = ft_atoi(ft_itoa(va_arg(ap, int)));
+		if (k < 0)
+		{
+			nb = k * -1;
+			flags = '-';
+		}
+		else
+			nb = k;
+		arg = ft_conversion(format[i], ap); 
 	}
-	nb = ft_atoi(mod);
+	else
+	{
+		while ((arg = ft_conversion(format[i], ap)) == NULL && ft_isdigit(format[i]) != 0)
+		{
+			mod = ft_strjoin(mod, ft_chrdup(format[i]));
+			i++;
+		}
+		nb = ft_atoi(mod);
+	}
 	free(mod);
 	if (arg != NULL && nb > ft_strlen(arg))
 	{
@@ -93,6 +111,11 @@ static char  *ft_modifier(char *format, char flags, va_list ap)
 			nb = nb - ft_strlen(arg);
 			mod = ft_calloc(1, nb + 1);
 			ft_memset(mod , '0', nb);
+			if (arg[0] == '-')
+			{
+				arg[0] = '0';
+				mod[0] = '-';
+			}
 			ft_putstr(ft_strjoin(mod, arg));
 			free(mod);
 			free(arg);
@@ -116,23 +139,46 @@ static char  *ft_modifier(char *format, char flags, va_list ap)
 			free(arg);
 		}
 	}
-	if (format[i] == '.')
+	else if (format[i] == '.')
 	{
 		i++;
 		mod = ft_calloc(1, 1);
-		while ((arg = ft_conversion(format[i], ap)) == NULL && ft_isdigit(format[i]) != 0)
+		if (format[i] == '*')
 		{
-			mod = ft_strjoin(mod, ft_chrdup(format[i]));
 			i++;
+			k = ft_atoi(ft_itoa(va_arg(ap, int)));
+			if (k < 0)
+			{
+				pre = k * -1;
+				flags = '-';
+			}
+			else
+				pre = k;
+			arg = ft_conversion(format[i], ap); 
 		}
-		pre = ft_atoi(mod);
+		else
+		{
+			while ((arg = ft_conversion(format[i], ap)) == NULL && ft_isdigit(format[i]) != 0)
+			{
+				mod = ft_strjoin(mod, ft_chrdup(format[i]));
+				i++;
+			}
+			pre = ft_atoi(mod);
+		}
 		free(mod);
 		if (pre > ft_strlen(arg))
 		{
 			pre = pre - ft_strlen(arg);
 			mod = ft_calloc(1, pre + 1);
 			ft_memset(mod, '0', pre);
-			arg = ft_strjoin(mod, arg);
+			if (arg[0] == '-')
+			{
+				arg[0] = '0';
+				arg = ft_strjoin(mod, arg);
+				arg = ft_strjoin("-", arg);
+			}
+			else
+				arg = ft_strjoin(mod, arg);
 			free(mod);
 		}
 		if (nb > ft_strlen(arg))
@@ -140,7 +186,11 @@ static char  *ft_modifier(char *format, char flags, va_list ap)
 			nb = nb - ft_strlen(arg);
 			mod = ft_calloc(1, nb + 1);
 			ft_memset(mod, ' ', nb);
-			ft_putstr(ft_strjoin(mod, arg));
+			if (flags == '-')
+				arg = ft_strjoin(arg, mod);
+			else
+				arg = ft_strjoin(mod, arg);
+			ft_putstr(arg);
 			free(mod);
 			free(arg);
 		}
@@ -167,6 +217,11 @@ static char	*ft_flags(char *format, va_list ap)
 		return (ft_modifier(&format[i + 1], '0', ap));
 	else if (format[i] == '-')
 		return (ft_modifier(&format[i + 1], '-', ap));
+	else if (format[i] == '%')
+	{
+		write(1, "%", 1);
+		return (&format[i]);
+	}
 	else
 		return (ft_modifier(&format[i], 0, ap));
 }
