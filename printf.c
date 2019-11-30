@@ -6,7 +6,7 @@
 /*   By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 12:52:22 by pmaldagu          #+#    #+#             */
-/*   Updated: 2019/11/27 18:51:57 by pmaldagu         ###   ########.fr       */
+/*   Updated: 2019/11/30 20:25:08 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	ft_putstr(char *str)
 	}
 }
 
-static char	*ft_conversion(char type, va_list ap)
+char	*ft_conversion(char type, va_list ap)
 {
 	if (type == 'c')
 		return (ft_chrdup(va_arg(ap, int)));
@@ -94,7 +94,8 @@ static char  *ft_modifier(char *format, char flags, va_list ap)
 		}
 		else
 			nb = k;
-		arg = ft_conversion(format[i], ap); 
+		arg = ft_conversion(format[i], ap);
+	   	printf("flgs : %c\n", flags);	
 	}
 	else
 	{
@@ -219,7 +220,12 @@ static char	*ft_flags(char *format, va_list ap)
 	i = 0;
 	mod = 0;
 	if (format[i] == '0')
-		return (ft_modifier(&format[i + 1], '0', ap));
+	{
+		if (format[i + 1] == '-')
+			return (ft_modifier(&format[i + 2], '-', ap));
+		else
+			return (ft_modifier(&format[i + 1], '0', ap));
+	}
 	else if (format[i] == '-')
 		return (ft_modifier(&format[i + 1], '-', ap));
 	else if (format[i] == '%')
@@ -251,7 +257,7 @@ static void	ft_convertcheck(const char *format, va_list ap)
 	}
 }
 
-int		ft_printf(const char *format, ...)
+int		ft_printf_v1(const char *format, ...)
 {
 	va_list ap;
 

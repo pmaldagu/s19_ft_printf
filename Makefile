@@ -6,12 +6,13 @@
 #    By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/22 09:46:31 by pmaldagu          #+#    #+#              #
-#    Updated: 2019/11/15 16:15:45 by pmaldagu         ###   ########.fr        #
+#    Updated: 2019/11/30 17:25:48 by pmaldagu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = ./src/*.c \
 	  printf.c \
+	  ft_printf.c \
 
 NAME = libftprintf.a
 
@@ -58,7 +59,7 @@ bonus:
 	ar rc $(NAME) $(BOBJS)
 
 test: re
-	@$(GCC) $(CFLAGS) -I$(HEADER) $(TEST) $(NAME)
+	@$(GCC) -I$(HEADER) $(TEST) $(NAME)
 	@clear
 	@echo ""
 	@echo "=========================================="

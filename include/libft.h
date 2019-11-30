@@ -6,7 +6,7 @@
 /*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 08:53:48 by agossuin          #+#    #+#             */
-/*   Updated: 2019/11/19 13:47:34 by pmaldagu         ###   ########.fr       */
+/*   Updated: 2019/11/30 20:02:44 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@ typedef struct		s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct	s_var	
+{
+	int zero;
+	int card;
+	int nb;
+	int pre;
+	char cv;
+}				mod;
 
 int					ft_atoi(const char *str);
 void				ft_bzero(void *b, size_t len);
@@ -70,7 +79,9 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 					void (*del)(void *));
+int					ft_printf_v1(const char *format, ...);//////////////
 int					ft_printf(const char *format, ...);
+int					ft_patoi(const char *format);
 int					ft_power(int nb, int power);
 int					ft_sqrt(int nb);
 void				ft_putnbr_base(int nb, int base);
@@ -78,5 +89,6 @@ void				ft_putnbr_hex(int nb, int cas);
 char				*ft_itoa_ubase(size_t nb, int base, char cas);
 char				*ft_hexadress(unsigned long nb);
 char				*ft_chrdup(char c);
+char				*ft_conversion(char type, va_list ap);
 
 #endif
