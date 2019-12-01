@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/15 13:26:37 by pmaldagu          #+#    #+#             */
-/*   Updated: 2019/12/01 20:40:34 by pmaldagu         ###   ########.fr       */
+/*   Created: 2019/10/07 10:06:50 by pmaldagu          #+#    #+#             */
+/*   Updated: 2019/12/01 19:44:52 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-int main()
+char	*ft_strndup(const char *s1, size_t size)
 {
-	char str[] = "calcul";
-	int a = 'a';
-	int b = -333;
-	unsigned int i = -333;
-	//int j = 30;
+	size_t		i;
+	char	*s2;
 
-	printf("\n=============== MON PRINTF ===============\n\n");
-	ft_printf("%54.-15% coucouc", b);
-	printf("\n\n================= PRINTF =================\n\n");
-	printf("%54.-15% coucouc", b);
-	//printf("\n=============== HEX ADRSS ================\n\n");
-	//printf("%s\n", ft_hexadress );
-	return (0);
+	i = 0;
+	if ((s2 = malloc(sizeof(*s2) * (size + 1))) != NULL)
+	{
+		while (i < size)
+		{
+			s2[i] = s1[i];
+			i++;
+		}
+		s2[i] = '\0';
+		return (s2);
+	}
+	return (NULL);
 }

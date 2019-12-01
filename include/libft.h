@@ -6,7 +6,7 @@
 /*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 08:53:48 by agossuin          #+#    #+#             */
-/*   Updated: 2019/11/30 20:02:44 by pmaldagu         ###   ########.fr       */
+/*   Updated: 2019/12/01 19:42:06 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct	s_var
 {
 	int zero;
 	int card;
+	int dot;
 	int nb;
 	int pre;
 	char cv;
@@ -90,5 +91,6 @@ char				*ft_itoa_ubase(size_t nb, int base, char cas);
 char				*ft_hexadress(unsigned long nb);
 char				*ft_chrdup(char c);
 char				*ft_conversion(char type, va_list ap);
+char				*ft_strndup(const char *s1, size_t size);
 
 #endif
