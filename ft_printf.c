@@ -6,7 +6,7 @@
 /*   By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 13:37:05 by pmaldagu          #+#    #+#             */
-/*   Updated: 2019/12/01 20:41:52 by pmaldagu         ###   ########.fr       */
+/*   Updated: 2019/12/01 20:49:24 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ static char *ft_noflg(char *arg, mod *value)
 		abs = value->nb * -1;
 	else
 		abs = value->nb;
-	if (value->zero == 0 && abs > (int)ft_strlen(arg) && value->cv != 'p')
+	if (value->zero == 0 && abs > (int)ft_strlen(arg)) // && value->cv != 'p')
 	{
 		abs = abs - (int)ft_strlen(arg);
 		spce = ft_calloc(1, abs + 1);
