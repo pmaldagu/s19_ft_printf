@@ -6,7 +6,7 @@
 /*   By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 13:37:05 by pmaldagu          #+#    #+#             */
-/*   Updated: 2019/12/01 20:49:24 by pmaldagu         ###   ########.fr       */
+/*   Updated: 2019/12/03 12:30:54 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,17 +176,17 @@ static char *ft_dot(char *arg, mod *value)
 		if (value->cv == 's')
 			arg = ft_calloc(1, 1);
 	}
-	else if (value->dot == 1 && value->pre > (int)ft_strlen(arg) && ft_convers(value->cv, 'n') == 0)
+	else if (value->dot == 1 && value->pre == 0)
+		arg = ft_calloc(1, 1);
+	else if (value->dot == 1 && value->pre > 0 && value->pre < (int)ft_strlen(arg) && ft_convers(value->cv, 'n') == 0)
+		value->zero = 0;
+	else if (value->dot == 1 && value->pre >= (int)ft_strlen(arg) && ft_convers(value->cv, 'n') == 0)
 	{
-		//printf("\nvalue->pre = %d\n", value->pre);
 		value->zero = 0;
 		value->pre -= ft_strlen(arg);
-		//printf("\nvalue->pre2 = %d\n", value->pre);
 		dot = ft_calloc(1, value->pre + 1);
 		ft_memset(dot, '0', value->pre);
 		tmp = arg;
-		//printf("\narg[0] = %c\n", arg[0]);
-		//printf("\nvdot = %s\n", dot);
 		if (arg[0] == '-')
 		{
 			arg[0] = '0';
@@ -197,7 +197,17 @@ static char *ft_dot(char *arg, mod *value)
 			arg = ft_strjoin(dot, arg);
 		//free(dot);
 		//free(tmp);
-		//printf("\narg = %s\n", arg);
+	}
+	else if (value->dot == 1 && value->pre >= (int)ft_strlen(arg) && value->cv == 'p')
+	{
+		value->zero = 0;
+		value->pre -= ft_strlen(arg);
+		dot = ft_calloc(1, value->pre + 1);
+		ft_memset(dot, '0', value->pre);
+		tmp = arg;
+		arg[1] = '0';
+		dot = ft_strjoin(dot, arg);
+		arg = ft_strjoin("0x", dot);
 	}
 	return (arg);
 }
@@ -239,7 +249,8 @@ static void ft_strcheck(char *format, mod *value, va_list ap)
 		if (format[i] == '%')
 		{
 			format = ft_modifier(&format[i + 1], value, ap);
-			tmp = ft_conversion(value->cv, ap);
+			if ((tmp = ft_conversion(value->cv, ap)) == NULL)
+					return ;
 			line = ft_flg0(tmp, value);
 			ft_putstr_fd(line, 1);
 			//free(line);
@@ -266,6 +277,8 @@ int ft_printf(const char *format, ...)
 	va_list ap;
 	mod value;
 
+	if (format == NULL)
+		return(-1);
 	fmt = (char*)format;
 	ft_nwstruct(&value);
 	va_start(ap, format);
