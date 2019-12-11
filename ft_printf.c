@@ -6,7 +6,7 @@
 /*   By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 13:37:05 by pmaldagu          #+#    #+#             */
-/*   Updated: 2019/12/03 12:30:54 by pmaldagu         ###   ########.fr       */
+/*   Updated: 2019/12/11 20:06:46 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@ static char ft_convers(char format, char type)
 static void ft_wildcard(int card, mod *value, va_list ap)
 {
 	if (value->card == 1)
+	{
 		value->nb = va_arg(ap, int);
+		if (value->nb < 0)
+			value->zero = 0;
+	}
 	if (card == 1)
 		value->pre = va_arg(ap, int);
 }
@@ -162,7 +166,31 @@ static char *ft_dot(char *arg, mod *value)
 	char *dot;
 	char *tmp;
 
-	if (value->dot == 1 && value->pre < (int)ft_strlen(arg) && value->pre > -1 && value->cv == 's')
+	if(value->dot == 1 && value->cv == '%')
+		value->dot = 0;
+	else if(value->cv == 'c' && ft_strlen(arg) == 0)
+	{
+		if (value->nb >0)
+			value->nb -= 1;
+		if (value->nb < 0)
+			value->nb += 1;
+	}
+	else if (value->dot == 1 && (value->cv == 'd' || value->cv == 'u' || value->cv == 'i') && value->pre == 0)
+		value->zero = 0;
+	else if (value->dot == 1 && value->pre <= 0 && value->cv == 'd')
+		value->dot = 0;
+	else if(value->dot == 1 && value->pre < 0 && (value->cv == 'X' || value->cv == 'x'))
+		value->dot = 0;
+	else if (value->dot == 1 && value->pre < 0 && (value->cv == 'i' || value->cv == 'u'))
+		value->dot = 0;
+	else if (value->dot == 1 && (value->cv == 'X' || value->cv == 'x') && value->pre == 0)
+	{
+		value->dot = 0;
+		value->zero = 0;
+	}
+	else if (value->dot == 1 && value->pre < 0 && value->cv == 's')
+		value->dot = 0;
+	else if (value->dot == 1 && value->pre < (int)ft_strlen(arg) && value->pre > -1 && value->cv == 's')
 	{
 		tmp = arg;
 		arg = ft_strndup(arg, value->pre);
@@ -176,7 +204,7 @@ static char *ft_dot(char *arg, mod *value)
 		if (value->cv == 's')
 			arg = ft_calloc(1, 1);
 	}
-	else if (value->dot == 1 && value->pre == 0)
+	else if (value->dot == 1 && value->pre == 0 && ft_convers(value->cv, 'n') == 1)
 		arg = ft_calloc(1, 1);
 	else if (value->dot == 1 && value->pre > 0 && value->pre < (int)ft_strlen(arg) && ft_convers(value->cv, 'n') == 0)
 		value->zero = 0;
@@ -250,7 +278,13 @@ static void ft_strcheck(char *format, mod *value, va_list ap)
 		{
 			format = ft_modifier(&format[i + 1], value, ap);
 			if ((tmp = ft_conversion(value->cv, ap)) == NULL)
-					return ;
+			{
+				if(value->cv == 's')
+					tmp = ft_strdup("(null)");
+				else
+					tmp = ft_calloc(1, 1);
+			}	
+				//return ;
 			line = ft_flg0(tmp, value);
 			ft_putstr_fd(line, 1);
 			//free(line);

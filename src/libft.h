@@ -6,7 +6,7 @@
 /*   By: agossuin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 08:53:48 by agossuin          #+#    #+#             */
-/*   Updated: 2019/12/03 12:29:16 by pmaldagu         ###   ########.fr       */
+/*   Updated: 2019/12/11 14:50:25 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef struct	s_var
 	int zero;
 	int card;
 	int dot;
-	int nb;
-	int pre;
+	long long int nb;
+	long long int pre;
 	char cv;
 }				mod;
 
