@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sqrt.c                                          :+:      :+:    :+:   */
+/*   ft_chrdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/16 09:04:18 by pmaldagu          #+#    #+#             */
-/*   Updated: 2019/11/15 17:53:56 by pmaldagu         ###   ########.fr       */
+/*   Created: 2019/10/07 10:06:50 by pmaldagu          #+#    #+#             */
+/*   Updated: 2019/12/16 20:25:52 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libftprintf.h"
 
-int	ft_sqrt(int nb)
+char	*ft_chrdup(char c)
 {
-	int a;
-	int nbr;
+	int		i;
+	char	*s2;
 
-	a = 1;
-	nbr = nb;
-	while (nbr > a)
+	i = 0;
+	if (c == 0)
+		return (0);
+	if ((s2 = malloc(sizeof(char) * 2)) != NULL)
 	{
-		nbr = (nbr + a) / 2;
-		a = nb / nbr;
+		s2[0] = c;
+		s2[1] = '\0';
+		return (s2);
 	}
-	if (nbr * nbr == nb)
-		return (nbr);
-	return (0);
+	return (NULL);
 }

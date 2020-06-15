@@ -1,36 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_pftutils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/08 16:22:34 by pmaldagu          #+#    #+#             */
-/*   Updated: 2019/11/15 19:27:23 by pmaldagu         ###   ########.fr       */
+/*   Created: 2019/12/19 16:05:07 by pmaldagu          #+#    #+#             */
+/*   Updated: 2019/12/19 16:19:06 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libftprintf.h"
 
-static void	ft_putchar(char c)
+char	ft_convers(char format, char type)
 {
-	write(1, &c, 1);
+	size_t	i;
+	char	*cvs;
+	char	*cvn;
+	char	*cv;
+
+	i = 0;
+	cvs = "cspdiouxX%";
+	cvn = "csp";
+	if (type == 's')
+		cv = cvs;
+	else
+		cv = cvn;
+	while (cv[i] != '\0')
+	{
+		if (format == cv[i])
+			return (format);
+		i++;
+	}
+	return (0);
 }
 
-void	ft_putnbr_base(int nb, int base)
+void	ft_free(char *heap)
 {
-	if (nb <= (base - 1) && nb >= 0)
-		ft_putchar(nb + 48);
-	else if (nb > (base - 1))
-	{
-		ft_putnbr_base(nb / base, base);
-		ft_putnbr_base(nb % base, base);
-	}
-	else if (nb == -2147483648)
-		write(1, "-2147483648", 11);
-	else
-	{
-		ft_putchar('-');
-		ft_putnbr_base((nb * -1), base);
-	}
+	if (heap != NULL)
+		free(heap);
 }

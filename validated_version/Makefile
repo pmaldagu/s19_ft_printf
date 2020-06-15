@@ -6,13 +6,21 @@
 #    By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/22 09:46:31 by pmaldagu          #+#    #+#              #
-#    Updated: 2019/12/11 15:22:18 by pmaldagu         ###   ########.fr        #
+#    Updated: 2020/01/09 17:29:52 by pmaldagu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = ./src/*.c \
-	  printf.c \
-	  ft_printf.c \
+SRC =	./libft/*.c \
+		ft_nbcheck.c \
+		ft_flagncv.c \
+		ft_isspace.c \
+		ft_precision.c \
+		ft_utoa_base.c \
+		ft_chrdup.c \
+		ft_hexadress.c \
+		ft_printf.c \
+		ft_strndup.c \
+		ft_pftutils.c \
 
 NAME = libftprintf.a
 
@@ -24,61 +32,32 @@ GCC = gcc
 
 RM = rm -rf
 
-HEADER = ./include
+HEADER = ./
 
 TEST = ./main.c
 
 
 all: $(NAME)
-	@clear
-	@echo "Making ${NAME}"
-#	@sleep 0.5
-#	@clear
-#	@echo "Making ${NAME} ."
-#	@sleep 0.3
-#	@clear
-#	@echo "Making ${NAME} . ."
-	@sleep 0.2
-#	@clear
-#	@echo "Making ${NAME} . . ."
-#	@sleep 0.3
-#	@clear
-	@echo "${NAME} Done!"
-	@sleep 0.5
-	
 
 $(OBJS): $(SRC)
-	@$(GCC) $(CFLAGS) -I$(HEADER) -c $(SRC)
+	$(GCC) $(CFLAGS) -I$(HEADER) -c $(SRC)
 
 $(NAME): $(OBJS)
-	@ar rc $(NAME) $(OBJS)
-	@ranlib $(NAME)   
-
-bonus:
-	$(GCC) $(CFLAGS) -I$(BHEADER) -c $(SBONUS)
-	ar rc $(NAME) $(BOBJS)
+	ar rc $(NAME) $(OBJS)
+	ranlib $(NAME)   
 
 test: re
-	@$(GCC) -I$(HEADER) $(TEST) $(NAME)
-	@clear
-	@echo ""
-	@echo "=========================================="
-	@echo "=============== RESULT : ================="
-	@echo "=========================================="
-	@echo ""
-	@./a.out
+	$(GCC) -I$(HEADER) $(TEST) $(NAME)
+	./a.out
 
 lib: all clean
 
 clean:
-	@clear
-	@$(RM) $(OBJS)
-	@echo "Removing objects"
+	$(RM) $(OBJS)
 
 fclean: clean
-	@$(RM) $(NAME)
-	@echo "Removing ${NAME}"
+	$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY: all test clean fclean re bonus
+.PHONY: all test clean fclean re

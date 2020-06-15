@@ -6,42 +6,54 @@
 /*   By: pmaldagu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 16:17:47 by pmaldagu          #+#    #+#             */
-/*   Updated: 2019/11/18 17:02:21 by pmaldagu         ###   ########.fr       */
+/*   Updated: 2019/12/19 16:16:12 by pmaldagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libftprintf.h"
 
-static unsigned long ft_msize(unsigned long nb)
+static char		*ft_cas(char cas)
 {
-	unsigned long i;
-
-	i = 0;
-	while (nb /= 16)
-		i++;
-	return (i);
+	if (cas == 'm')
+		return (ft_strdup("0123456789abcdef"));
+	else
+		return (ft_strdup("0123456789ABCDEF"));
 }
 
-char *ft_hexadress(unsigned long nb)
+static size_t	ft_msize(size_t nb, int base)
 {
-	char *hex;
-	char *nbr;
-	int len;
-	
-	hex = ft_strdup("0123456789abcdef");
-	len = ft_msize(nb) + 3;
+	size_t	i;
+
+	i = 0;
+	while (nb /= base)
+		i++;
+	return (i + 1);
+}
+
+char			*ft_utoa_base(size_t nb, int base, char cas)
+{
+	char	*hex;
+	char	*nbr;
+	int		len;
+
+	hex = ft_cas(cas);
+	len = ft_msize(nb, base);
 	if ((nbr = malloc(sizeof(char) * (len + 1))))
 	{
 		nbr[len] = '\0';
-		nbr[0] = '0';
-		nbr[1] = 'x';
-		while (nb / 16)
+		while (nb / base)
 		{
-			nbr[--len] = hex[nb % 16];
-			nb /= 16;
+			if (base == 16)
+				nbr[--len] = hex[nb % 16];
+			else
+				nbr[--len] = (nb % base) + 48;
+			nb /= base;
 		}
-		nbr[--len] = hex[nb % 16];
-		free(hex);
+		if (base == 16)
+			nbr[--len] = hex[nb % 16];
+		else
+			nbr[--len] = (nb % base) + 48;
+		ft_free(hex);
 		return (nbr);
 	}
 	return (NULL);
