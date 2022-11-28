@@ -12,9 +12,6 @@ Success: 100%
 
 ## References
 
-```
-man printf
-```
-[Complete documentation](https://www.gnu.org/software/coreutils/printf)
+[Complete documentation](https://cplusplus.com/reference/cstdio/printf/)
 
 
