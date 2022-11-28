@@ -10,6 +10,12 @@ You will mainly learn how to use variadic arguments."
 
 Success: 100%
 
+## How to
+
+```
+make
+```
+
 ## References
 
 ```
