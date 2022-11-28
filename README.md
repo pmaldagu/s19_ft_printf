@@ -12,7 +12,7 @@ Success: 100%
 
 ## How to
 
-Compile and create the archive libft.a:
+Compile and create the archive libftprintf.a:
 ```
 make
 ```
