@@ -12,6 +12,8 @@ Success: 100%
 
 ## References
 
-[Complete documentation](https://cplusplus.com/reference/cstdio/printf/)
+```
+man 3 printf
+```
 
 
