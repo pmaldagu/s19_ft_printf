@@ -1,4 +1,4 @@
-# Printf
+# ft_printf
 
 19 Coding School project
 
@@ -8,17 +8,13 @@ You will mainly learn how to use variadic arguments."
 
 ## Status
 
-### Success
-```diff
-+ 100%
-```
+Success: 100%
 
-Moulinette: 
-```diff
-+ 100%
+## References
+
 ```
-```diff
-+ test_spdxiucpercent: 8/8 correct functions
-+ test_fields: 4/4 correct functions
-- bonus_test: KO (Does not compile)
+man printf
 ```
+[Complete documentation](https://www.gnu.org/software/coreutils/printf)
+
+
