@@ -26,7 +26,7 @@ make fclean
 ```
 
 ## References
-- RTFM
+- RTFM:
 ```
 man 3 printf
 ```
